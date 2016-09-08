@@ -323,7 +323,7 @@ class MWSConnection(AWSQueryConnection):
                                                response.reason, body)
         digest = response.getheader('Content-MD5')
         if digest is not None:
-            assert content_md5(body) == digest
+            assert content_md5(body) == digest.encode('ascii')
         contenttype = response.getheader('Content-Type')
         return self._parse_response(parser, contenttype, body)
 
