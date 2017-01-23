@@ -779,6 +779,14 @@ class MWSConnection(AWSQueryConnection):
         """
         return self._post_request(request, kw, response)
 
+    @requires(['FeesEstimateRequestList'])
+    @structured_objects('FeesEstimateRequestList')
+    @api_action('Products', 20, 10)
+    def get_my_fees_estimate(self, request, response, **kw):
+        """Returns the estimated fees for a list of products.
+        """
+        return self._post_request(request, kw, response)
+
     @requires(['MarketplaceId', 'ASINList'])
     @structured_lists('ASINList.ASIN')
     @api_action('Products', 20, 20)
