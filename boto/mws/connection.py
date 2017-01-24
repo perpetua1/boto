@@ -328,7 +328,7 @@ class MWSConnection(AWSQueryConnection):
         return self._parse_response(parser, contenttype, body)
 
     def _parse_response(self, parser, contenttype, body):
-        if not contenttype.startswith('text/xml'):
+        if not contenttype.startswith('text/xml') or not parser:
             return body
         handler = XmlHandler(parser, self)
         xml.sax.parseString(body, handler)
@@ -778,6 +778,15 @@ class MWSConnection(AWSQueryConnection):
            by relevancy, based on a search query that you specify.
         """
         return self._post_request(request, kw, response)
+
+    @requires(['FeesEstimateRequestList'])
+    @structured_objects('FeesEstimateRequestList')
+    @api_action('Products', 20, 10)
+    def get_my_fees_estimate(self, request, response, **kw):
+        """Returns the estimated fees for a list of products.
+           The returned value is the raw response body.
+        """
+        return self._post_request(request, kw, None)
 
     @requires(['MarketplaceId', 'ASINList'])
     @structured_lists('ASINList.ASIN')
