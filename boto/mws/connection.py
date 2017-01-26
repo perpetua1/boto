@@ -328,7 +328,7 @@ class MWSConnection(AWSQueryConnection):
         return self._parse_response(parser, contenttype, body)
 
     def _parse_response(self, parser, contenttype, body):
-        if not contenttype.startswith('text/xml') or not parser:
+        if not contenttype.startswith('text/xml') or parser is None:
             return body
         handler = XmlHandler(parser, self)
         xml.sax.parseString(body, handler)
